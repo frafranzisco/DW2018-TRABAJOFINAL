@@ -11,7 +11,5 @@ urlpatterns = [
 	path('detail_book/<str:id>', views.detail_book, name="detail_book"),
 	#HAY QUE HACER FUNCIONAR EL BOTÓN DE AGREGAR LIBRO EN LIST_BOOK
 	path('index',views.index,name="index"),
-	
-    path('genres/',views.add_genres,name="genres"),
-
+	path('genre/',views.add_genre,name="genre"),
 ]

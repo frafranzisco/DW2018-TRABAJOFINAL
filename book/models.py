@@ -44,7 +44,20 @@ class Book(models.Model):
 		choices=BOOK_TYPE_CHOICES,
 		default=BOOK,
 	)
-	genre = models.CharField(max_length=30) #CAMBIAR
+	GENRE = 'Género'
+	GENRE_CHOICES = (
+		('ADVENTURE', "Aventura"),
+		('DRAMA', "Drama"),
+		('FANTASY', "Fantasía"),
+		('FICTION', "Ficción"),
+		('ROMANCE', "Romance"),
+		('HISTORY', "Historia"),
+		('POETRY', "Poesía"),
+	)
+	genre = models.CharField(
+		max_length=20,
+		choices=GENRE_CHOICES,
+	)
 	language = models.CharField(max_length=20) #CAMBIAR
 	ORIGINAL = 'Original'
 	ORIGINAL_CHOICES = (

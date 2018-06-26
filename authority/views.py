@@ -34,7 +34,6 @@ def signup_user(request):
     template_name="register.html"
     data = {}
     form_admin = SignUpUserForm(request.POST or None)
-
     if form_admin.is_valid():
         form_admin.save()
         password = form_admin.cleaned_data.get('password1')

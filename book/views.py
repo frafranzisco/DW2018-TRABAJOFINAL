@@ -15,6 +15,13 @@ def inicio(request):
 	template_name = "index.html"
 	return render(request,template_name)
 
+def add_genre(request):
+	template_name = "genre.html"
+	data = {}
+	object_list = Book.objects.all()
+	data['add_genre'] = object_list
+	return render(request,template_name,data)
+
 @login_required(login_url="/")
 def detail_book(request,id):
 	template_name = "detail_book.html"
@@ -82,6 +89,8 @@ def add_book(request):
 		form = BookForm()
 	data['form'] = form
 	return render(request, template_name, data)
+
+
 #
 #
 # #HAY QUE HACER FUNCIONAR EL BOTÓN DE AGREGAR LIBRO EN LIST_BOOK
@@ -120,18 +129,9 @@ def add_book(request):
 #     return render(request,template_name)
 
 # Create your views here.
+#
+
 @login_required(login_url="/")
 def index(request):
     template_name = "index.html"
     return render(request,template_name)
-
-def add_genres(request):
-    template_name="genres.html"
-    data = {}
-    #if request.method == 'POST':
-    #form_genre = GenreForm(request.POST or None)
-    #if form_genre.is_valid():
-    #    form_genre.save()
-    #    return redirect("base")
-    #data['form'] = form_genre
-    return render(request,template_name,data)
