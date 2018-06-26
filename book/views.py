@@ -12,9 +12,9 @@ from django.contrib.auth.decorators import login_required
 
 @login_required(login_url="/")
 def inicio(request):
-	template_name = "index.html"
-	return render(request,template_name)
-
+	object_list = Book.objects.all() 
+	template_name = "inicio.html"
+	return render(request, template_name, {'object_list':object_list})
 def add_genre(request):
 	template_name = "genre.html"
 	data = {}
