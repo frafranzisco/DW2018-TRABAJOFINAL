@@ -43,7 +43,7 @@ def list_book(request):
 		# If page is not an integer, deliver first page.
 		b = paginator.page(1)
 	except EmptyPage:
-		# If page is out of range (e.g. 9999), deliver last page of results.
+		# If page is out of rangAPRETARe (e.g. 9999), deliver last page of results.
 		b = paginator.page(paginator.num_pages)
 	data['object_list'] = object_list
 	data['b'] = b
@@ -131,7 +131,52 @@ def add_book(request):
 # Create your views here.
 #
 
+#####USERBOOK#####
 @login_required(login_url="/")
-def index(request):
-    template_name = "index.html"
-    return render(request,template_name)
+def list_user(request):
+    template_name = 'list_user.html'
+    data = {}
+    data['form'] = BookForm()
+    object_list = UserBook.objects.all()
+    paginator = Paginator(object_list, 1)
+    page = request.GET.get('page')
+    users = paginator.get_page(page)
+    data['object_list','users'] = object_list, users
+    return render(request,template_name,data)
+@login_required(login_url="/")
+def remove_user(request,userbook_run):
+    template_name = "book/remove_user.html"
+    data = {}
+    user_remove = UserBook.objects.get(RUN=user_run)
+    data['user'] = user_remove
+    if request.method == "POST":
+        user_remove.delete()
+        return redirect("user_list")
+    return render(request,template_name,data)
+@login_required(login_url="/")
+def edit_user(request,userbook_run):
+    template_name = 'book/add_user.html'
+    data = {}
+    user = UserBook.objects.get(rut=user_run)
+    if request.method == "GET":
+        form_user = BookForm(instance=user)
+    else:
+        form_user = BookForm(request.POST,request.FILES, instance=user)
+        if form_user.is_valid():
+            form_user.save()
+        return redirect("user_list")
+    data['form']=form_user
+    return render(request,template_name,data)
+@login_required(login_url="/")
+def add_user(request):
+    template_name = 'book/add_user.html'
+    data = {}
+    if request.method == "POST":
+        form_user = BookForm(request.POST,request.FILES)
+        if form_user.is_valid():
+            form_user.save()
+            return redirect("home")
+    else:
+        data['form'] = BookForm()
+    return render(request,template_name,data)
+#####USERBOOK#####

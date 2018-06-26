@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+
+
+{% block contenido %}
+	{{request.user.name}}
+	<div class="container">
+		<h1 style="margin-top:30px;">Biblioteca digital</h1>
+		<div class="row">
+			<div class="col-10"></div>
+			
+			<div class="col-lg-12">
+				<table class="table table-striped">
+				  <thead> 
+					  <!--FILA DE ATRIBUTOS DE COLUMNAS -->
+						<tr>			  
+						</tr>
+				  </thead>
+					  <tbody>
+					<!--INICIO DE LA FILA. AQUI SE LISTAN LOS REGISTROS-->
+					{% for userbook in users %}
+					  	<tr>				
+					 		<td> {{userbook.user}} </td>
+							<td> {{userbook.RUN}} </td>
+              <td> {{userbook.commune}} </td>
+              <td> {{userbook.phone}} </td>
+							<td>
+								
+								<!--BOTON QUE AL APRETAR DESPLIEGA OPCIONES EN CADA REGISTRO DE LA TABLA-->
+								<div class="dropdown">
+							  		<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Manager</button>
+
+								 	<div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+
+									<!--BOTON EDITAR EN CADA REGISTRO DE LA TABLA-->
+
+										<a style="text-decoration:none" 
+										href="{% url 'detail_book' book.id %}">
+								      		<button class="dropdown-item" type="button">Ver libro</button>
+								    	</a>
+
+									<!--BOTON ELIMINAR EN CADA REGISTRO DE LA TABLA-->
+        								<a style="text-decoration:none" href="">
+								     		<button class="dropdown-item" type="button">Editar publicación</button>
+								    	</a>
+								    	<a style="text-decoration:none" href="">
+								     		<button class="dropdown-item" type="button">Eliminar</button>
+								    	</a>
+									</div>
+								</div>
+						  	</td>
+						</tr> <!--FIN DE LA FILA-->
+					{% endfor %}
+				</tbody>
+				</table>
+			</div>
+
+			<nav aria-label="Page navigation example">
+				<ul class="pagination justify-content-end">
+
+				<!--BOTON PREVIOUS-->
+					{% if b.has_previous %}
+			            <li class="page-item">
+			            	<a class="page-link" href="?page={{ b.previous_page_number }}" tabindex="-1">Previous</a>
+			            </li>
+			        {% endif %}
+
+				<!--BOTONES QUE DEPENDEN DE LOS REGISTROS-->
+			        {% for page in b.paginator.page_range %}
+			            <li class="{% if b.number == page %}active{% endif %}">
+		                	<a class="page-link" href="?page={{ page }}">{{ page }}</a>
+			            </li>
+			        {% endfor %}
+
+				<!--BOTON NEXT-->
+			        {% if b.has_next %}
+			            <li class="page-item">
+			          		<a class="page-link" href="?page={{ b.next_page_number }}">Next</a>
+				       	</li>
+			        {% endif %}
+
+	      		</ul>
+			</nav>
+		</div>
+	</div>
+{% endblock contenido %}

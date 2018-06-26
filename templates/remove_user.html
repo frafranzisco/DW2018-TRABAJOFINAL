@@ -1,0 +1,15 @@
+
+{% load bootstrap4 %}
+
+<form enctype="multipart/form-data" action="" method="POST">
+  {% csrf_token %}
+  <p>¿Desea eliminar el registro de {{bookuser.user}} ?</p>
+  {% buttons %}
+    <button type="submit" class="btn btn-primary">Si, eliminar</button>
+  {% endbuttons %}
+  {# <input type="submit" value="Enviar" class="btn btn-primary float-right btn-lg"> #}
+</form>
+<a style="text-decoration:none" href="{% url 'user_list' %}">
+  <button class="dropdown-item" type="button">Cancelar</button>
+</a>
+{# <a class="btn btn-primary" href="{% url 'user_list' %}">Cancelar</a> #}

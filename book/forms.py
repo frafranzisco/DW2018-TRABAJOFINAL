@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from book.models import Book, User
+from book.models import *
 
 
 class BookForm(ModelForm):
@@ -33,4 +33,19 @@ class BookForm(ModelForm):
             'comment' : 'Comentario', 
             'number_of_pages' : 'Número de páginas', 
             'picture' : 'Imagen del texto', 
+        }
+
+    class Meta:
+        model = UserBook
+        fields = [
+            'user',
+            'RUN',
+            'commune',
+            'phone',
+        ]
+        labels = {
+            'user': 'Usurio',
+            'RUN': 'RUN',
+            'commune': 'Comuna',
+            'phone': 'Teléfono',
         }
