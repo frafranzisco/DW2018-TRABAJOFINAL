@@ -1,5 +1,5 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "base/base.html" %}
+
 {% load bootstrap4 %}
 
 
@@ -14,7 +14,7 @@
 					<form enctype="multipart/form-data" method="POST" class="">
 						{% csrf_token %}
 						{% bootstrap_form form %}
-						<input type="submit" value="Enviar" class="btn btn-primary float-right btn-lg">
+					<input type="submit" value="Enviar" class="btn btn-primary float-right btn-lg">
 					</form>
 				</div>
 			</div>
