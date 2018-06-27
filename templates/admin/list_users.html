@@ -1,11 +1,21 @@
-{% extends "base.html" %}
+{% extends "base/base.html" %}
+{% load static %}
+{% block menu %}
+ <li class="nav-small-cap">Administrador</li>
+    <li>
+        <a class="has-arrow waves-effect waves-dark " href="{% url 'list_users' %}" 
+                aria-expanded="false">
+        <img src="{% static 'images/iconos/libro.png' %}" height="30px" width="30px" alt="menu">
+ 	<span class="hide-menu"">Todos los usuarios</span>
+ </a>
 
+ </li>
 
-
+{% endblock menu %}
 {% block contenido %}
-	{{request.user.name}}
+
 	<div class="container">
-		<h1 style="margin-top:30px;">Biblioteca digital</h1>
+		<h1 style="margin-top:30px;">Administrador</h1>
 		<div class="row">
 			<div class="col-10"></div>
 			
@@ -13,17 +23,24 @@
 				<table class="table table-striped">
 				  <thead> 
 					  <!--FILA DE ATRIBUTOS DE COLUMNAS -->
-						<tr>			  
+						<tr>
+						  <th scope="col">ID</th>
+						  <th scope="col">Nombre usuario</th>
+						  <th scope="col">RUN</th>
+						  <th scope="col">Comuna</th>
+						  <th scope="col">Telefono</th>						  
 						</tr>
 				  </thead>
-					  <tbody>
+				<tbody>
 					<!--INICIO DE LA FILA. AQUI SE LISTAN LOS REGISTROS-->
-					{% for userbook in users %}
+					{% for u in object_list  %}
+						{% if u.user.is_user %}
 					  	<tr>				
-					 		<td> {{userbook.user}} </td>
-							<td> {{userbook.RUN}} </td>
-              <td> {{userbook.commune}} </td>
-              <td> {{userbook.phone}} </td>
+					 		<td> {{u.id}} </td>
+					  		<td> {{u.user.user.username}} </td>
+							<td> {{u.RUN}} </td>
+							<td> {{u.commune}} </td>
+							<td> {{u.phone}} </td>
 							<td>
 								
 								<!--BOTON QUE AL APRETAR DESPLIEGA OPCIONES EN CADA REGISTRO DE LA TABLA-->
@@ -35,21 +52,22 @@
 									<!--BOTON EDITAR EN CADA REGISTRO DE LA TABLA-->
 
 										<a style="text-decoration:none" 
-										href="{% url 'detail_book' book.id %}">
-								      		<button class="dropdown-item" type="button">Ver libro</button>
+										href="{% url 'user_remove' u.RUN %}">
+								      		<button class="dropdown-item" type="button">Eliminar usuario</button>
 								    	</a>
 
 									<!--BOTON ELIMINAR EN CADA REGISTRO DE LA TABLA-->
-        								<a style="text-decoration:none" href="">
+        							<!-- <a style="text-decoration:none" href="">
 								     		<button class="dropdown-item" type="button">Editar publicación</button>
 								    	</a>
-								    	<a style="text-decoration:none" href="">
+								    <a style="text-decoration:none" href="">
 								     		<button class="dropdown-item" type="button">Eliminar</button>
 								    	</a>
-									</div>
+ -->									</div>
 								</div>
-						  	</td>
+						  	</td>							
 						</tr> <!--FIN DE LA FILA-->
+						{% endif %}
 					{% endfor %}
 				</tbody>
 				</table>
@@ -59,23 +77,23 @@
 				<ul class="pagination justify-content-end">
 
 				<!--BOTON PREVIOUS-->
-					{% if b.has_previous %}
+					{% if object_list.has_previous %}
 			            <li class="page-item">
-			            	<a class="page-link" href="?page={{ b.previous_page_number }}" tabindex="-1">Previous</a>
+			            	<a class="page-link" href="?page={{ object_list.previous_page_number }}" tabindex="-1">Previous</a>
 			            </li>
 			        {% endif %}
 
 				<!--BOTONES QUE DEPENDEN DE LOS REGISTROS-->
-			        {% for page in b.paginator.page_range %}
-			            <li class="{% if b.number == page %}active{% endif %}">
+			        {% for page in object_list.paginator.page_range %}
+			            <li class="{% if object_list.number == page %}active{% endif %}">
 		                	<a class="page-link" href="?page={{ page }}">{{ page }}</a>
 			            </li>
 			        {% endfor %}
 
 				<!--BOTON NEXT-->
-			        {% if b.has_next %}
+			        {% if object_list.has_next %}
 			            <li class="page-item">
-			          		<a class="page-link" href="?page={{ b.next_page_number }}">Next</a>
+			          		<a class="page-link" href="?page={{ object_list.next_page_number }}">Next</a>
 				       	</li>
 			        {% endif %}
 
@@ -83,4 +101,6 @@
 			</nav>
 		</div>
 	</div>
+	
+	
 {% endblock contenido %}

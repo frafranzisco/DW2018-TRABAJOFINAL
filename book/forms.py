@@ -35,17 +35,4 @@ class BookForm(ModelForm):
             'picture' : 'Imagen del texto', 
         }
 
-    class Meta:
-        model = UserBook
-        fields = [
-            'user',
-            'RUN',
-            'commune',
-            'phone',
-        ]
-        labels = {
-            'user': 'Usurio',
-            'RUN': 'RUN',
-            'commune': 'Comuna',
-            'phone': 'Teléfono',
-        }
+
